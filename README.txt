@@ -1,1 +1,0 @@
-Bu klasördeki index.html dosyasını GitHub reposunun ana dizinine yükleyin. ZIP dosyasını doğrudan yüklemeyin; önce çıkarın.
