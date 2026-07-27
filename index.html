@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#b96f72" />
+  <meta name="description" content="Berna V16.4 — Büyük cozy pixel arayüz, Miki ve sınav geri sayımı" />
+  <title>Berna V16.4</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell" data-theme="cozy">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">COZY PIXEL PRODUCTIVITY</p>
+        <h1 id="brandName">Berna</h1>
+      </div>
+      <div class="top-actions">
+        <button id="installBtn" class="ghost-btn hidden" type="button">Yükle</button>
+        <button id="settingsBtn" class="top-icon-btn" type="button" aria-label="Ayarları aç">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"/><path d="M19.4 13.5a7.5 7.5 0 0 0 .05-1.5 7.5 7.5 0 0 0-.05-1.5l1.65-1.28-1.8-3.12-1.95.78a7.7 7.7 0 0 0-2.6-1.5L14.4 3.3h-3.6l-.3 2.07a7.7 7.7 0 0 0-2.6 1.5l-1.95-.78-1.8 3.12L5.8 10.5a7.5 7.5 0 0 0-.05 1.5c0 .5.02 1 .05 1.5l-1.65 1.28 1.8 3.12 1.95-.78a7.7 7.7 0 0 0 2.6 1.5l.3 2.08h3.6l.3-2.08a7.7 7.7 0 0 0 2.6-1.5l1.95.78 1.8-3.12-1.65-1.28Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section id="today" class="page active" aria-labelledby="todayTitle">
+        <div class="page-heading">
+          <div><p class="eyebrow">BUGÜN</p><h2 id="todayTitle">Küçük adımlar, gerçek ilerleme</h2></div>
+          <div class="streak-badge">🔥 <span id="streakCount">0</span> gün</div>
+        </div>
+
+        <article class="hero-card pixel-hero-card">
+          <div>
+            <p id="dailyQuote" class="hero-quote"></p>
+            <p class="muted">Miki küçük piksel odasında bugün de yanında.</p>
+          </div>
+          <div class="mini-miki pixel-mini-miki" aria-hidden="true">
+            <span class="mini-ear left"></span><span class="mini-ear right"></span><span class="mini-head"><i class="mini-eye left"></i><i class="mini-eye right"></i><i class="mini-nose"></i></span><span class="mini-body"></span><span class="mini-tail"></span>
+          </div>
+        </article>
+
+        <article id="examCountdownCard" class="card exam-countdown-card">
+          <div class="section-row exam-heading-row">
+            <div><p class="eyebrow">SINAV GERİ SAYIMI</p><h3 id="examTitle">Sınavına ne kadar kaldı?</h3></div>
+            <button id="editExamBtn" class="pixel-icon-btn" type="button" aria-label="Sınav geri sayımını düzenle">Düzenle</button>
+          </div>
+          <div id="examEmptyState" class="exam-empty-state">
+            <div class="pixel-calendar" aria-hidden="true"><span></span><i></i><b></b></div>
+            <div><strong>Sınav tarihini ekle</strong><p class="muted">Berna kalan zamanı gün, saat ve dakika olarak gösterecek.</p></div>
+            <button id="addExamBtn" class="primary-btn" type="button">Tarih ekle</button>
+          </div>
+          <div id="examActiveState" class="exam-active-state hidden">
+            <div class="exam-info-line"><span id="examName" class="exam-name">Sınav</span><span id="examDateLabel" class="tag"></span></div>
+            <div class="exam-countdown-grid" aria-live="polite">
+              <div><strong id="examDays">0</strong><span>gün</span></div>
+              <div><strong id="examHours">00</strong><span>saat</span></div>
+              <div><strong id="examMinutes">00</strong><span>dakika</span></div>
+              <div><strong id="examSeconds">00</strong><span>saniye</span></div>
+            </div>
+            <div class="exam-progress-track"><span id="examProgressBar"></span></div>
+            <p id="examCountdownMessage" class="muted exam-countdown-message"></p>
+          </div>
+        </article>
+
+        <div class="stat-grid today-stats">
+          <article class="stat-card"><span>Bugünkü odak</span><strong id="todayFocus">0 dk</strong></article>
+          <article class="stat-card"><span>Pomodoro</span><strong id="todayPomodoros">0</strong></article>
+          <article class="stat-card"><span>Tamamlanan görev</span><strong id="todayCompletedTasks">0</strong></article>
+        </div>
+
+        <article class="card">
+          <div class="section-row"><div><p class="eyebrow">GÜNLÜK GÖREVLER</p><h3>Bugünün üç küçük hedefi</h3></div><span id="missionDate" class="tag"></span></div>
+          <div id="dailyMissions" class="mission-list"></div>
+        </article>
+
+        <article class="card">
+          <div class="section-row"><div><p class="eyebrow">YAKLAŞANLAR</p><h3>Bugünün ajandası</h3></div><button class="text-btn" data-go="agenda">Ajandaya git</button></div>
+          <div id="todayTodoList" class="compact-list"></div>
+        </article>
+      </section>
+
+      <section id="focus" class="page" aria-labelledby="focusTitle">
+        <div class="page-heading"><div><p class="eyebrow">ODAK</p><h2 id="focusTitle">Dikkatini tek bir şeye ver</h2></div><span class="tag">Bugün: <b id="focusTodayCount">0</b></span></div>
+        <div class="focus-layout">
+          <article class="timer-card card">
+            <div class="mode-switch" role="group" aria-label="Sayaç modu">
+              <button class="mode-btn active" data-mode="focus">Odak</button>
+              <button class="mode-btn" data-mode="short">Kısa mola</button>
+              <button class="mode-btn" data-mode="long">Uzun mola</button>
+            </div>
+            <label class="field-label" for="focusSubject">Ders</label>
+            <select id="focusSubject" class="input focus-subject"></select>
+            <div id="timerOrbit" class="timer-orbit" data-mode="focus">
+              <svg class="timer-ring" viewBox="0 0 240 240" aria-hidden="true">
+                <defs><linearGradient id="timerGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--primary)"/><stop offset="100%" stop-color="var(--secondary)"/></linearGradient></defs>
+                <circle class="timer-ring-track" cx="120" cy="120" r="104"></circle>
+                <circle id="timerRingProgress" class="timer-ring-progress" cx="120" cy="120" r="104"></circle>
+              </svg>
+              <div class="timer-orbit-glow" aria-hidden="true"></div>
+              <div class="timer-core"><span id="timerModeLabel" class="timer-mode-label">ODAK</span><div id="timerDisplay" class="timer-display" aria-live="polite">25:00</div><span class="timer-caption">Dikkat alanın</span></div>
+            </div>
+            <div class="button-row timer-actions"><button id="startTimer" class="primary-btn">Başlat</button><button id="pauseTimer" class="secondary-btn">Duraklat</button><button id="resetTimer" class="ghost-btn">Sıfırla</button></div>
+            <p id="timerStatus" class="muted centered">Hazırsan başla.</p>
+          </article>
+
+          <div class="focus-side-stack">
+            <article class="card focus-companion-card">
+              <div class="section-row focus-companion-heading"><div><p class="eyebrow">MİKİ</p><h3 id="focusMikiTitle">Seansa hazır</h3></div><span id="focusMikiStateTag" class="tag">Hazır</span></div>
+              <div id="focusMikiScene" class="focus-miki-scene pixel-focus-scene state-ready" data-state="ready" role="img" aria-label="Miki odak sırasında masada çalışıyor">
+                <div class="focus-window-scene" aria-hidden="true"><span class="focus-sky"></span><span class="focus-window-line vertical"></span><span class="focus-window-line horizontal"></span></div>
+                <div class="focus-desk-scene" aria-hidden="true"><span class="focus-monitor"><i></i></span><span class="focus-keyboard"></span><span class="focus-mug"></span></div>
+                <div class="focus-miki" aria-hidden="true">
+                  <span class="focus-tail"></span><span class="focus-body"></span>
+                  <span class="focus-head"><i class="focus-ear left"></i><i class="focus-ear right"></i><i class="focus-eye left"></i><i class="focus-eye right"></i><i class="focus-nose"></i></span>
+                  <span class="focus-paw left"></span><span class="focus-paw right"></span>
+                </div>
+                <div class="focus-success-burst" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <p id="focusMikiMessage" class="tiny muted focus-miki-message">Başladığında Miki de masasına geçecek.</p>
+            </article>
+
+            <article class="card sound-card">
+              <p class="eyebrow">ORTAM SESİ</p><h3>Cihazında üretilir</h3>
+              <div class="sound-grid">
+                <button class="sound-btn active" data-sound="off">Sessiz</button><button class="sound-btn" data-sound="rain">Yağmur</button><button class="sound-btn" data-sound="forest">Orman</button><button class="sound-btn" data-sound="fire">Şömine</button><button class="sound-btn" data-sound="wind">Rüzgâr</button><button class="sound-btn" data-sound="white">Beyaz gürültü</button>
+              </div>
+              <label class="field-label" for="volumeControl">Ses seviyesi</label><input id="volumeControl" type="range" min="0" max="1" value="0.25" step="0.05" />
+              <p class="tiny muted">Harici ses dosyası kullanılmaz.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="agenda" class="page" aria-labelledby="agendaTitle">
+        <div class="page-heading"><div><p class="eyebrow">AJANDA</p><h2 id="agendaTitle">Görevlerini sadeleştir</h2></div><span class="tag"><span id="openTaskCount">0</span> açık görev</span></div>
+        <article class="card">
+          <form id="taskForm" class="task-form">
+            <div class="field-span-2"><label class="field-label" for="taskTitle">Görev</label><input id="taskTitle" class="input" required maxlength="80" placeholder="Örn. Klinik psikoloji notlarını tekrar et" /></div>
+            <div><label class="field-label" for="taskSubject">Ders</label><select id="taskSubject" class="input"></select></div>
+            <div><label class="field-label" for="taskPriority">Öncelik</label><select id="taskPriority" class="input"><option value="low">Düşük</option><option value="medium" selected>Orta</option><option value="high">Yüksek</option></select></div>
+            <div><label class="field-label" for="taskDate">Tarih</label><input id="taskDate" class="input" type="date" required /></div>
+            <div><label class="field-label" for="taskMinutes">Tahmini süre</label><input id="taskMinutes" class="input" type="number" min="5" max="600" value="30" /></div>
+            <button class="primary-btn field-span-2" type="submit">Görev ekle</button>
+          </form>
+        </article>
+        <article class="card">
+          <div class="filter-row"><button class="filter-btn active" data-filter="all">Tümü</button><button class="filter-btn" data-filter="open">Açık</button><button class="filter-btn" data-filter="today">Bugün</button><button class="filter-btn" data-filter="completed">Tamamlanan</button></div>
+          <div id="taskList" class="task-list"></div>
+        </article>
+      </section>
+
+      <section id="miki" class="page" aria-labelledby="mikiTitle">
+        <div class="page-heading"><div><p class="eyebrow">MİKİ</p><h2 id="mikiTitle"><span id="mikiNameTitle">Miki</span> seni gördüğüne sevindi</h2></div><span id="mikiLiveStateTag" class="tag">Canlı</span></div>
+
+        <div class="miki-layout">
+          <article class="card pet-stage pixel-pet-stage">
+            <div class="pet-ambient" aria-hidden="true"><span class="ambient-orb orb-one"></span><span class="ambient-orb orb-two"></span><span class="pet-spark spark-one">✦</span><span class="pet-spark spark-two">✦</span></div>
+            <div id="pixelCat" class="pixel-cat cozy-pixel-cat motion-idle" role="img" aria-label="Özgün dijital kedi Miki" tabindex="0">
+              <span class="cat-shadow"></span><span class="cat-tail"><i></i></span><span class="cat-body"><i class="cat-chest"></i></span>
+              <span class="cat-head"><i class="ear left"><b></b></i><i class="ear right"><b></b></i><i class="brow left"></i><i class="brow right"></i><i class="eye left"></i><i class="eye right"></i><i class="cheek left"></i><i class="cheek right"></i><i class="nose"></i><i class="mouth"></i><i class="whiskers left"></i><i class="whiskers right"></i></span>
+              <span class="cat-leg left"></span><span class="cat-leg right"></span><span class="cat-paw left"></span><span class="cat-paw right"></span><span class="cat-zzz">zZ</span><span class="cat-celebration"><i></i><i></i><i></i><i></i><i></i></span>
+            </div>
+            <div id="petMoodChip" class="pet-mood-chip"><span></span> Seni gördüğüne sevindi</div>
+            <p id="mikiSpeech" class="speech">Bugün birlikte odaklanalım mı?</p>
+            <div class="button-row wrap"><button class="secondary-btn pet-action" data-pet-action="pet">Yaklaş</button><button class="secondary-btn pet-action" data-pet-action="play">Oyun molası</button><button class="secondary-btn pet-action" data-pet-action="rest">Dinlen</button></div>
+          </article>
+
+          <article class="card miki-profile-card">
+            <p class="eyebrow">BAĞ</p><h3>Miki ile ilişkin</h3>
+            <div class="bond-panel"><div class="bond-number"><strong id="mikiBondValue">0</strong><small>/100</small></div><div class="meter bond-meter"><span id="mikiBondBar" style="width:0%"></span></div><p id="mikiBondHint" class="tiny muted"></p></div>
+            <hr />
+            <div class="section-row"><div><p class="eyebrow">CANLI DAVRANIŞLAR</p><h3>Seansına göre tepki verir</h3></div></div>
+            <div class="motion-feature-list">
+              <div><span class="motion-dot"></span><p><strong>Odak</strong><small>Masasına geçer ve seninle çalışır.</small></p></div>
+              <div><span class="motion-dot"></span><p><strong>Mola</strong><small>Gerinir ve pencereye bakar.</small></p></div>
+              <div><span class="motion-dot"></span><p><strong>Başarı</strong><small>Seans sonunda kısa bir kutlama yapar.</small></p></div>
+              <div><span class="motion-dot"></span><p><strong>Bakış</strong><small>Dokunuşunu gözleriyle takip eder.</small></p></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="section-row miki-section-heading"><div><p class="eyebrow">ODA</p><h3>Miki'nin yaşayan köşesi</h3></div><span id="roomTimeTag" class="tag"></span></div>
+        <article class="room-scene card cozy-pixel-room" id="roomScene" data-period="day" data-miki-state="idle">
+          <div class="room-atmosphere" aria-hidden="true"><span class="room-glow"></span><span class="dust d1"></span><span class="dust d2"></span><span class="dust d3"></span></div>
+          <div class="room-wall"><span class="wall-panel panel-one"></span><span class="wall-panel panel-two"></span><span class="room-led"></span></div>
+          <div class="room-window"><span class="window-glass"></span><span class="sky-object"></span><span class="cloud c1"></span><span class="cloud c2"></span><span class="city-line"></span><span class="window-sill"></span></div>
+          <div class="wall-art"><span></span><i></i></div><div class="room-floor"><span class="floor-grid"></span></div><div class="base-console"><span class="speaker left"></span><span class="speaker right"></span><span class="vinyl"></span></div><div class="floor-cushion"><span></span></div>
+          <div class="furniture desk-item hidden-item" data-room-item="desk"><span class="monitor"><i></i></span><span class="desk-light"></span><span class="keyboard"></span></div><div class="furniture plant-item hidden-item" data-room-item="plant"><span></span></div><div class="furniture shelf-item hidden-item" data-room-item="shelf"><i></i><i></i><i></i><b></b></div><div class="furniture lamp-item hidden-item" data-room-item="lamp"><span></span></div><div class="furniture rug-item hidden-item" data-room-item="rug"></div>
+          <div class="room-cat" id="roomCat" role="img" aria-label="Miki odada dolaşıyor"><span class="room-cat-tail"></span><span class="room-cat-body"></span><span class="room-cat-head"><i class="left"></i><i class="right"></i><b></b></span><span class="room-cat-focus-prop"></span></div>
+        </article>
+
+        <article class="card collection-section">
+          <div class="section-row"><div><p class="eyebrow">ODA KOLEKSİYONU</p><h3>Çalıştıkça yeni parçalar aç</h3></div><span id="collectionProgress" class="tag"></span></div>
+          <div id="collectionGrid" class="collection-grid"></div>
+        </article>
+      </section>
+
+      <section id="stats" class="page" aria-labelledby="statsTitle">
+        <div class="page-heading"><div><p class="eyebrow">İLERLEME</p><h2 id="statsTitle">Çalışmanın görünür hâli</h2></div><span id="statsWeekTag" class="tag">Son 7 gün</span></div>
+        <div class="stat-grid wide">
+          <article class="stat-card"><span>Toplam Pomodoro</span><strong id="totalPomodoros">0</strong></article><article class="stat-card"><span>Toplam çalışma</span><strong id="totalHours">0 sa</strong></article><article class="stat-card"><span>Ortalama odak</span><strong id="averageFocus">0 dk</strong></article><article class="stat-card"><span>En uzun seri</span><strong id="longestStreak">0 gün</strong></article>
+        </div>
+        <article class="card"><div class="section-row"><div><p class="eyebrow">SON 7 GÜN</p><h3>Odak dakikaları</h3></div><span id="bestDay" class="tag"></span></div><div id="weeklyChart" class="bar-chart"></div></article>
+        <article class="card"><p class="eyebrow">DERS DAĞILIMI</p><h3>Neye zaman ayırdın?</h3><div id="subjectStats" class="subject-stats"></div></article>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Ana gezinme">
+      <button class="nav-btn active" data-page="today"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3l8.5 7.5v9a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-9Z"/><path d="M9 21v-6h6v6"/></svg><small>Bugün</small></button>
+      <button class="nav-btn" data-page="focus"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><small>Odak</small></button>
+      <button class="nav-btn" data-page="agenda"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M7.5 11h9M7.5 15h5"/></svg><small>Ajanda</small></button>
+      <button class="nav-btn" data-page="miki"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 8-1-5 4 3a9 9 0 0 1 6 0l4-3-1 5a8 8 0 1 1-12 0Z"/><path d="M9 12h.01M15 12h.01M10 15c1.2.9 2.8.9 4 0"/></svg><small>Miki</small></button>
+      <button class="nav-btn" data-page="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/><path d="M3 20h18"/></svg><small>İlerleme</small></button>
+    </nav>
+
+    <dialog id="settingsDialog" class="settings-dialog">
+      <div class="dialog-content settings-dialog-content">
+        <button id="closeSettingsDialog" class="dialog-close" aria-label="Kapat">×</button>
+        <div class="page-heading"><div><p class="eyebrow">AYARLAR</p><h2>Berna'yı kendine göre ayarla</h2></div><span class="tag">V16.4</span></div>
+        <div class="settings-grid">
+          <article class="card"><p class="eyebrow">KİŞİSELLEŞTİRME</p><h3>İsimler</h3><form id="profileForm" class="stack-form"><label class="field-label" for="appNameInput">Uygulama adı</label><input id="appNameInput" class="input" maxlength="20"/><label class="field-label" for="mikiNameInput">Miki'nin adı</label><input id="mikiNameInput" class="input" maxlength="20"/><button class="primary-btn">Kaydet</button></form></article>
+          <article class="card"><p class="eyebrow">SAYAÇ</p><h3>Süreler</h3><form id="timerSettingsForm" class="stack-form"><label class="field-label" for="focusMinutesInput">Odak (dakika)</label><input id="focusMinutesInput" class="input" type="number" min="1" max="180"/><label class="field-label" for="shortMinutesInput">Kısa mola</label><input id="shortMinutesInput" class="input" type="number" min="1" max="60"/><label class="field-label" for="longMinutesInput">Uzun mola</label><input id="longMinutesInput" class="input" type="number" min="1" max="90"/><button class="primary-btn">Süreleri kaydet</button></form></article>
+          <article class="card"><p class="eyebrow">SINAV GERİ SAYIMI</p><h3>Hedef tarih</h3><form id="examForm" class="stack-form"><label class="field-label" for="examNameInput">Sınav adı</label><input id="examNameInput" class="input" maxlength="40" placeholder="Örn. Klinik Psikoloji Finali"/><label class="field-label" for="examDateInput">Tarih ve saat</label><input id="examDateInput" class="input" type="datetime-local"/><button class="primary-btn" type="submit">Geri sayımı kaydet</button><button id="clearExamBtn" class="ghost-btn" type="button">Geri sayımı kaldır</button></form></article>
+          <article class="card"><p class="eyebrow">DERSLER</p><h3>Yeni ders ekle</h3><form id="subjectForm" class="stack-form"><input id="subjectNameInput" class="input" maxlength="24" placeholder="Ders adı" required/><input id="subjectIconInput" class="input" maxlength="4" placeholder="İkon: 🧠"/><button class="primary-btn">Ders ekle</button></form><div id="subjectList" class="chip-list"></div></article>
+          <article class="card"><p class="eyebrow">VERİ</p><h3>Yedekleme</h3><div class="stack-form"><button id="exportData" class="secondary-btn">JSON dışa aktar</button><label class="secondary-btn file-label">JSON içe aktar<input id="importData" type="file" accept="application/json"/></label><button id="resetData" class="danger-btn">Tüm verileri sıfırla</button></div></article>
+        </div>
+      </div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
